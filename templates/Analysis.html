@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Advanced Patient Analysis Result</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function printPage() {
+      window.print();
+    }
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+  <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md my-10">
+    <h2 class="text-3xl font-bold text-center text-blue-600 dark:text-blue-400 mb-6">Comprehensive Patient X-ray Analysis</h2>
+
+    <div class="bg-blue-100 dark:bg-blue-900 dark:text-blue-200 p-4 rounded mb-6">
+      This report provides a detailed analysis of the patient's X-ray, including AI-driven predictions and a visual map of lung damage.
+    </div>
+
+    <div class="border rounded-lg shadow-sm mb-6">
+      <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 font-semibold border-b">Patient Information & AI Summary</div>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p><strong>Patient Name:</strong> {{ name }}</p>
+          <p><strong>Gender:</strong> {{ gender }}</p>
+          <p><strong>Age:</strong> {{ age }} years</p>
+        </div>
+        <div class="text-right">
+          <p class="mb-2"><strong>AI Prediction:</strong>
+            <span class="inline-block px-4 py-1 rounded-full text-white {% if prediction == 'Positive' %}bg-red-500{% else %}bg-green-500{% endif %}">
+              {{ prediction }}
+            </span>
+          </p>
+          <p><strong>Confidence:</strong> <span class="text-blue-600 font-bold">{{ confidence }}%</span></p>
+          <p class="text-sm text-gray-500">Based on the latest X-ray scan.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-xl font-semibold border-b border-blue-500 pb-1 mb-4">Visual Analysis</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <p class="font-semibold mb-2">Original X-ray:</p>
+        <img src="{{ image_path }}" class="w-full h-auto rounded-lg border" alt="Patient X-ray">
+        <p class="text-sm text-gray-500 mt-2">High-resolution X-ray image.</p>
+      </div>
+      <div>
+        <p class="font-semibold mb-2">Heatmap (Grad-CAM):</p>
+        <img src="{{ heatmap_path }}" class="w-full h-auto rounded-lg border" alt="Heatmap">
+        <p class="text-sm text-gray-500 mt-2">Highlights regions most influential for the AI's prediction.</p>
+      </div>
+    </div>
+
+    <h3 class="text-xl font-semibold border-b border-blue-500 pb-1 mb-4">Lung Damage Localization Map</h3>
+    <div class="text-center mb-6">
+      <p class="text-gray-500 mb-2">This map visually represents the regions of the lungs with the most significant predicted damage or anomalies.</p>
+      <img src="{{ lung_damage_map_path }}" class="w-full h-auto rounded-lg border" alt="Lung Damage Map">
+      <p class="text-xs text-gray-400 mt-2">Note: Interpretation should be done by a medical professional.</p>
+    </div>
+
+    <h3 class="text-xl font-semibold border-b border-blue-500 pb-1 mb-4">Recommended Actions & Next Steps</h3>
+    <div class="border rounded-lg p-4 mb-6 bg-gray-50 dark:bg-gray-700">
+      <p class="mb-3">Based on the current analysis and prediction, here are some recommended actions:</p>
+      <ul class="list-disc pl-5 space-y-2">
+        {% if prediction == 'Positive' %}
+          <li><strong>Urgent Consultation:</strong> Recommend immediate follow-up with a pulmonologist for further diagnostic tests.</li>
+          <li><strong>Patient Education:</strong> Provide detailed information about the predicted condition and its implications.</li>
+          <li><strong>Isolation Measures:</strong> If applicable, advise on appropriate isolation or preventative measures.</li>
+        {% else %}
+          <li><strong>Routine Follow-up:</strong> Advise a routine check-up in 6-12 months or if new symptoms develop.</li>
+          <li><strong>Lifestyle Recommendations:</strong> Encourage healthy habits to support lung health.</li>
+          <li><strong>Preventative Care:</strong> Remind about routine vaccinations as appropriate.</li>
+        {% endif %}
+        <li><strong>Referral to Specialist:</strong> Consider referral to a specialist for holistic care.</li>
+        <li><strong>Record Keeping:</strong> Ensure this report is added to the patient's electronic health record.</li>
+      </ul>
+      <p class="text-blue-600 dark:text-blue-300 font-semibold text-sm mt-4">Disclaimer: This AI analysis is for informational purposes only. Always consult a qualified healthcare provider.</p>
+    </div>
+
+    <div class="flex justify-between mt-8">
+      <a href="{{ url_for('index') }}" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">Back to Upload New X-ray</a>
+      <button onclick="printPage()" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Print Report</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comprehensive X-ray Report - {{ name }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0f172a] text-blue-100 p-6 font-sans">
+
+  <div class="max-w-5xl mx-auto bg-[#1e293b] p-8 rounded-2xl shadow-lg border border-blue-800">
+
+    <!-- Header -->
+    <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-300 mb-4">
+      Comprehensive Patient X-ray Analysis
+    </h1>
+    <p class="text-center text-blue-200 mb-8 bg-blue-700/80 p-3 rounded-lg">
+      This report provides a detailed analysis of the patient's X-ray, including AI-driven predictions and a visual map of lung damage.
+    </p>
+
+    <!-- Patient Info & AI Prediction -->
+    <div class="grid md:grid-cols-2 gap-6 bg-[#334155] p-6 rounded-lg border border-blue-600 mb-10">
+      <div>
+        <h2 class="text-lg font-semibold text-blue-100 mb-2">Patient Information:</h2>
+        <p><strong>Patient Name:</strong> {{ name }}</p>
+        <p><strong>Gender:</strong> {{ gender }}</p>
+        <p><strong>Age:</strong> {{ age }} years</p>
+        <p><strong>Height:</strong> {{ height }} cm</p>
+        <p><strong>Weight:</strong> {{ weight }} kg</p>
+        <p><strong>Blood Pressure:</strong> {{ blood_pressure }}</p>
+        <p><strong>Blood Group:</strong> {{ blood_group }}</p>
+      </div>
+
+    </div>
+
+    <!-- Visual Analysis -->
+    <h2 class="text-2xl font-semibold text-blue-200 mb-4">Visual Analysis</h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-10">
+      <div>
+        <p class="font-medium text-blue-300 mb-2">Original X-ray:</p>
+        <img src="{{ xray_path }}" alt="X-ray" class="w-full max-h-80 object-contain border border-blue-600 rounded-lg shadow" />
+        <p class="text-sm text-blue-400 mt-2">High-resolution X-ray image.</p>
+      </div>
+      <div>
+        <p class="font-medium text-blue-300 mb-2">Heatmap (Grad-CAM):</p>
+        <img src="{{ heatmap_path }}" alt="Heatmap" class="w-full max-h-80 object-contain border border-blue-600 rounded-lg shadow" />
+        <p class="text-sm text-blue-400 mt-2">Highlights regions most influential for the AI's prediction.</p>
+      </div>
+    </div>
+
+
+
+    <!-- Reports -->
+    <h2 class="text-2xl font-semibold text-blue-200 mb-4">Attached Reports</h2>
+    {% if attached_reports %}
+      <ul class="list-disc list-inside mb-8 text-blue-300 space-y-1">
+        {% for report in attached_reports %}
+          <li>
+            <a href="{{ url_for('static', filename=report) }}" target="_blank" class="hover:underline hover:text-blue-100">
+              {{ report.split('/')[-1] }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="mb-8 italic text-blue-500">No attached reports available.</p>
+    {% endif %}
+
+    <!-- Notes -->
+    <h2 class="text-2xl font-semibold text-blue-200 mb-2">Doctor's Notes</h2>
+    <label for="doctorNotes" class="block text-blue-300 mb-2">Enter your notes below:</label>
+    <textarea
+      id="doctorNotes"
+      class="w-full h-32 p-4 bg-[#0f172a] text-blue-100 border border-blue-700 rounded-lg resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Write observations, instructions or comments here..."
+    ></textarea>
+
+    <div class="flex items-center gap-4 mt-4 mb-10">
+      <button
+        id="clearNotesBtn"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+      >
+        Clear Notes
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center">
+      <a href="{{ url_for('dashboard') }}" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-md transition">
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const notesField = document.getElementById('doctorNotes');
+    const clearBtn = document.getElementById('clearNotesBtn');
+
+    notesField.value = sessionStorage.getItem('doctorNotes') || '';
+    notesField.addEventListener('input', () => {
+      sessionStorage.setItem('doctorNotes', notesField.value);
+    });
+    clearBtn.addEventListener('click', () => {
+      notesField.value = '';
+      sessionStorage.removeItem('doctorNotes');
+      notesField.focus();
+    });
+  </script>
+</body>
+</html>

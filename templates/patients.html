@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d9488;
+            --sidebar-bg: #1a1a1a;
+        }
+
+        body {
+            background-color: #f8fafc;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            color: white;
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1rem;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        .nav-item {
+            padding: 0.5rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary-color);
+        }
+
+        .patient-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .patient-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-badge.moderate {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.high {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b7c74;
+        }
+
+        @media print {
+            .sidebar, .no-print {
+                display: none !important;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+            }
+            .patient-card {
+                break-inside: avoid;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 class="mb-4">Doctor's Dashboard</h3>
+    <div class="nav-item active">
+        <i class="fas fa-user-injured"></i>
+        Patients
+    </div>
+    <div class="nav-item">
+        <i class="fas fa-inbox"></i>
+        Inbox
+    </div>
+    <div class="nav-item">
+        <i class="fas fa-chart-line"></i>
+        Dashboard
+    </div>
+    <div class="nav-item">
+        <i class="fas fa-file-medical"></i>
+        Reports
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Patients</h2>
+        <div class="action-buttons no-print">
+            <button class="btn btn-outline-secondary" onclick="window.print()">
+                <i class="fas fa-print"></i> Print List
+            </button>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Visit
+            </button>
+        </div>
+    </div>
+
+    {% for patient in patients %}
+    <div class="patient-card">
+        <div class="patient-info">
+            <div class="patient-avatar">
+                <img src="{{ patient.avatar if patient.avatar else url_for('static', filename='default-avatar.png') }}" 
+                     alt="Patient avatar" class="w-100 h-100 object-fit-cover">
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="mb-1">{{ patient.name }}</h4>
+                        <p class="text-muted mb-1">{{ patient.dob }} ({{ patient.age }}y) {{ patient.gender }}</p>
+                        <p class="text-muted mb-0">MRN {{ patient.mrn }}</p>
+                    </div>
+                    <div class="text-end">
+                        <p class="mb-1">Eligibility: {{ patient.eligibility }}</p>
+                        <p class="mb-1">PCP: {{ patient.pcp }}</p>
+                        <div class="d-flex gap-2 align-items-center justify-content-end">
+                            <span>Acuity Risk Level:</span>
+                            <span class="status-badge {{ patient.risk_level.lower() }}">
+                                {{ patient.risk_level }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <span class="me-4">
+                    <i class="fas fa-clipboard-list"></i>
+                    Clinical Enrolled Programs: {{ patient.enrolled_programs }}
+                </span>
+                <span>
+                    <i class="fas fa-notes-medical"></i>
+                    Patient Notes: {{ patient.notes }}
+                </span>
+            </div>
+            <div class="action-buttons no-print">
+                <button class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <button class="btn btn-primary btn-sm">
+                    New Visit
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

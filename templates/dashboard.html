@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patients Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+  <script src="https://kit.fontawesome.com/a2d9d6c04d.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white p-6 flex-shrink-0">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold">Doctor's Dashboard</h3>
+        <button id="modeToggle" class="text-gray-400 hover:text-white">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+
+      <nav>
+        <div class="mb-4 font-semibold">Navigation</div>
+        <ul>
+          <li class="mb-2">
+            <a href="#" class="flex items-center gap-2 text-teal-400 font-semibold">
+              <i class="fas fa-user-injured"></i>
+              Patients
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="mt-8">
+        <h5 class="mb-2 text-sm text-gray-400">Patient List</h5>
+        <div class="space-y-1">
+          {% for patient in patients %}
+          <a href="#patient-{{ patient.id }}" class="block px-2 py-1 rounded hover:bg-teal-600">
+            {{ patient.name }}
+          </a>
+          {% else %}
+          <p class="text-gray-400">No patients found.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <h2 class="text-2xl font-bold mb-6">Patients Overview</h2>
+
+      {% for patient in patients %}
+      <div id="patient-{{ patient.id }}" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6 transition-all hover:shadow-lg">
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <h3 class="text-lg font-semibold">{{ patient.name }}</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Age: {{ patient.age }} | Gender: {{ patient.gender }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">MRN: {{ patient.mrn }}</p>
+          </div>
+          <span class="px-3 py-1 rounded-full text-sm font-medium
+            {% if patient.risk_level == 'Low' %}bg-green-100 text-green-800 dark:bg-green-200 dark:text-green-900
+            {% elif patient.risk_level == 'Moderate' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-200 dark:text-yellow-900
+            {% elif patient.risk_level == 'High' %}bg-red-100 text-red-800 dark:bg-red-200 dark:text-red-900{% endif %}">
+            {{ patient.risk_level }}
+          </span>
+        </div>
+
+        <p class="mb-1">Primary Care Physician: {{ patient.pcp }}</p>
+        <p class="mb-3">Enrolled Programs: {{ patient.enrolled_programs }}</p>
+
+        <div class="flex gap-3">
+          <a href="{{ url_for('report', patient_id=patient.id) }}" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
+            <i class="fas fa-file-medical"></i> Report
+          </a>
+          <a href="{{ patient.xray_path }}" target="_blank" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
+            <i class="fas fa-x-ray"></i> X-ray
+          </a>
+          <a href="{{ patient.heatmap_path }}" target="_blank" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
+            <i class="fas fa-temperature-high"></i> Heatmap
+          </a>
+          <a href="{{ url_for('result', patient_id=patient.id) }}" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
+            <i class="fas fa-chart-line"></i> Analysis
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-gray-500 dark:text-gray-400">No patient data available.</p>
+      {% endfor %}
+    </main>
+  </div>
+
+  <script>
+    // Light/Dark mode toggle
+    const toggleBtn = document.getElementById('modeToggle');
+    toggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const icon = toggleBtn.querySelector('i');
+      icon.classList.toggle('fa-moon');
+      icon.classList.toggle('fa-sun');
+    });
+  </script>
+</body>
+</html>

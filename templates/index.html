@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patient Registration & X-ray Upload</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0f172a] text-gray-200 min-h-screen flex items-center justify-center p-6">
+
+  <div class="w-full max-w-2xl bg-[#1e293b] rounded-3xl shadow-xl p-10">
+    <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Patient Registration & X-ray Upload</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+
+      <div>
+        <label for="name" class="block font-semibold mb-1 text-gray-300">Patient Name</label>
+        <input type="text" name="name" id="name" required
+               class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="age" class="block font-semibold mb-1 text-gray-300">Age</label>
+        <input type="number" name="age" id="age" required
+               class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="gender" class="block font-semibold mb-1 text-gray-300">Gender</label>
+        <select name="gender" id="gender" required
+                class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="" disabled selected>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="height" class="block font-semibold mb-1 text-gray-300">Height (cm)</label>
+          <input type="number" name="height" id="height"
+                 class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="weight" class="block font-semibold mb-1 text-gray-300">Weight (kg)</label>
+          <input type="number" name="weight" id="weight"
+                 class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <div>
+        <label for="blood_pressure" class="block font-semibold mb-1 text-gray-300">Blood Pressure</label>
+        <input type="text" name="blood_pressure" id="blood_pressure" placeholder="e.g. 120/80"
+               class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="blood_group" class="block font-semibold mb-1 text-gray-300">Blood Group</label>
+        <input type="text" name="blood_group" id="blood_group" placeholder="e.g. A+"
+               class="w-full bg-[#334155] text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="xray" class="block font-semibold mb-1 text-gray-300">Upload X-ray Image</label>
+        <input type="file" name="xray" id="xray" accept="image/*" required
+               class="w-full text-white bg-[#334155] border border-gray-600 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:border-0 file:rounded-md file:bg-blue-600 file:text-white hover:file:bg-blue-700" />
+      </div>
+
+      <div class="pt-4">
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md">
+          Submit
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+</html>
