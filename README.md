@@ -64,10 +64,10 @@ pneumonia-xray-dashboard/
 ## 🖼️ Interface Screenshots
 
 ### 🔹 AI Result Analysis
-![AI Result](assets/Screenshot%20(190).png)
+![AI Result](Screenshot%20(190).png)
 
 ### 🔹 Doctor Dashboard
-![Dashboard](assets/Screenshot%20(199).png)
+![Dashboard](Screenshot%20(199).png)
 
 ---
 
