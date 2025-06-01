@@ -28,15 +28,6 @@ This project is a **Flask-based AI web app** for analyzing chest X-rays using a 
 
 ---
 
-## 🛠 Installation
-
-### 1. Clone this repo
-
-bash
-git clone https://github.com/yourusername/pneumonia-xray-dashboard.git
-cd pneumonia-xray-dashboard
-
-
 ├── model/
 │   └── xray_model.h5
 ├── static/
