@@ -44,6 +44,25 @@ A **Flask-based AI web app** that empowers medical professionals to analyze ches
 
 > _Make sure you save your screenshots as `report_view.png` and `dashboard_view.png` under an `/assets/` folder in your repository._
 
+
+### Structure
+├── model/
+│   └── xray_model.h5
+├── static/
+│   ├── uploads/
+│   ├── heatmaps/
+│   ├── lung_maps/
+│   └── default-avatar.png
+├── templates/
+│   ├── index.html
+│   ├── dashboard.html
+│   ├── result.html
+│   ├── report.html
+│   └── Analysis.html
+├── app.py
+└── README.md
+
+
 ---
 
 ## 🚀 Getting Started
