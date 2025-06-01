@@ -1,51 +1,42 @@
 # 🩺 Pneumonia Detection & X-ray Analysis Dashboard
 
-A **Flask-based AI web app** that empowers medical professionals to analyze chest X-rays using a CNN model. It provides diagnostic predictions, heatmaps, and lung damage visualization with a sleek, responsive interface.
+This project is a **Flask-based AI web app** for analyzing chest X-rays using a pre-trained Convolutional Neural Network (CNN) model. It provides doctors with a comprehensive dashboard to:
+
+- Predict if a patient has **Pneumonia**.
+- Generate **Grad-CAM heatmaps** to visualize lung regions contributing to the diagnosis.
+- Render **lung damage localization maps**.
+- Upload and manage multiple patient X-rays and reports.
 
 ---
 
-## 🔍 Features
+## 🔬 Features
 
-- 🤖 **AI Prediction**  
-  Classifies chest X-rays as **Normal** or **Pneumonia** with a confidence score.
-
-- 🌈 **Grad-CAM Heatmaps**  
-  Highlights critical lung regions influencing the diagnosis.
-
-- 🫁 **Lung Damage Localization**  
-  Visual damage maps for a clear understanding of affected lung zones.
-
-- 🧑‍⚕️ **Doctor Dashboard**  
-  Manage patient records, view reports, and access analysis quickly.
-
-- 📂 **Patient Management**  
-  Upload X-rays, input patient details, and generate individual reports.
-
-- 💻 **Responsive UI**  
-  Built with Bootstrap and custom styling for a clean clinical look.
+- 🔍 **AI Prediction**: Binary classification (Pneumonia / Normal) with confidence score.
+- 🌡 **Grad-CAM** Heatmap: Highlights regions of concern.
+- 🫁 **Lung Damage Map**: Zone-wise intensity map for visual understanding.
+- 📊 Patient-specific dashboards with vital info, reports, and analysis.
+- 📁 Upload patient details, X-ray images, and supporting reports.
+- 🖼️ Clean, responsive UI using Bootstrap and custom design.
 
 ---
 
-## 🧠 Model Details
+## 🧠 Model
 
-- Format: `.h5` (Keras)
-- Input Size: `224x224`
-- Output: Binary Classification (`Normal` / `Pneumonia`)
+- Format: .h5 (Keras model)
+- Input size: 224x224
+- Output: Binary classification (Normal / Pneumonia)
 
 ---
 
-## 🖼️ Screenshots
+## 🛠 Installation
 
-### 🧾 Report Page
-![Report Page](assets/report_view.png)
+### 1. Clone this repo
 
-### 🩺 Doctor’s Dashboard
-![Dashboard View](assets/dashboard_view.png)
-
-> _Make sure you save your screenshots as `report_view.png` and `dashboard_view.png` under an `/assets/` folder in your repository._
+bash
+git clone https://github.com/yourusername/pneumonia-xray-dashboard.git
+cd pneumonia-xray-dashboard
 
 
-### Structure
 ├── model/
 │   └── xray_model.h5
 ├── static/
@@ -61,14 +52,3 @@ A **Flask-based AI web app** that empowers medical professionals to analyze ches
 │   └── Analysis.html
 ├── app.py
 └── README.md
-
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/pneumonia-xray-dashboard.git
-cd pneumonia-xray-dashboard
